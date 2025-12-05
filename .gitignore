@@ -1,0 +1,6 @@
+.gradle
+.idea
+build
+.java-version
+/scorehub-core/src/main/resources/config/application-local.yml
+/.vscode/
