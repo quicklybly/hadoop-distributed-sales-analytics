@@ -4,3 +4,5 @@ build
 .java-version
 /scorehub-core/src/main/resources/config/application-local.yml
 /.vscode/
+./jobs/sales-analytics.jar
+./hadoop/data
