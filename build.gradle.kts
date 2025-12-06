@@ -26,7 +26,6 @@ java {
 
 tasks {
     shadowJar {
-        // result file name 'sales-analytics.jar'
         archiveBaseName.set("sales-analytics")
         archiveClassifier.set("")
         archiveVersion.set("")
