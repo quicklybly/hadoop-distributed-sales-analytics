@@ -1,5 +1,6 @@
 package com.quicklybly.itmo.salesanalytics.linecount;
 
+import com.quicklybly.itmo.salesanalytics.utils.ConfigUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
@@ -12,20 +13,7 @@ public class LineCountDriver {
 
     public static void main(String[] args) throws Exception {
         // using TextInputFormat with LineRecordReader by default
-        Configuration conf = new Configuration();
-
-        conf.set("mapreduce.framework.name", "yarn");
-        conf.set("yarn.resourcemanager.hostname", "resourcemanager");
-        conf.set("mapreduce.app-submission.cross-platform", "true");
-
-        conf.set(
-            "mapreduce.job.classpath.files",
-            "file:///opt/hadoop-3.2.1/share/hadoop/mapreduce/hadoop-mapreduce-client-app-3.2.1.jar"
-        );
-
-        conf.set("yarn.app.mapreduce.am.resource.mb", "512");
-        conf.set("mapreduce.map.memory.mb", "512");
-        conf.set("mapreduce.reduce.memory.mb", "512");
+        Configuration conf = ConfigUtils.getConfiguration();
 
         Job job = Job.getInstance(conf, "csv line count");
 
