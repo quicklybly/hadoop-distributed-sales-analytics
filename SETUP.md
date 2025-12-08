@@ -35,3 +35,13 @@ docker exec -it resourcemanager bash
 
 hdfs dfs -cat /<output_folder>/part-r-00000
 ```
+
+## Data Generation
+
+For large data generation use `data_generator.py` script, change `TARGET_SIZE_MB` if needed.
+
+```shell
+python3 data_generator.py
+```
+
+As a result you will see `sales_heavy.csv` file in `jobs` directory, load it to hdfs using steps above.
