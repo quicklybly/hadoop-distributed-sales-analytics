@@ -6,3 +6,4 @@ build
 /.vscode/
 ./hadoop/data/
 /jobs/sales-analytics.jar
+/results/venv/
