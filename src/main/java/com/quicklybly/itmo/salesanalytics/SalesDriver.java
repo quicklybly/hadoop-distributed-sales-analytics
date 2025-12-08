@@ -20,15 +20,30 @@ public class SalesDriver {
         Job aggregationJob = Job.getInstance(conf, "sales analysis: aggregation");
         aggregationJob.setJarByClass(SalesDriver.class);
 
+        int numberOfLines = 3_000_000;
+        if (args.length > 2) {
+            numberOfLines = Integer.parseInt(args[2]);
+        }
         aggregationJob.setInputFormatClass(NLineInputFormat.class);
-        NLineInputFormat.setNumLinesPerSplit(aggregationJob, 1000_000);
+        NLineInputFormat.setNumLinesPerSplit(aggregationJob, numberOfLines);
 
         aggregationJob.setMapperClass(SalesMapper.class);
-        aggregationJob.setCombinerClass(SalesReducer.class);
+
+        boolean useCombiner = true;
+        if (args.length > 4) {
+            useCombiner = Boolean.parseBoolean(args[4]);
+        }
+        if (useCombiner) {
+            aggregationJob.setCombinerClass(SalesReducer.class);
+        }
+
         aggregationJob.setReducerClass(SalesReducer.class);
 
-        // todo extract to variable
-        aggregationJob.setNumReduceTasks(4);
+        int numberOfReduceTasks = 1;
+        if (args.length > 3) {
+            numberOfReduceTasks = Integer.parseInt(args[3]);
+        }
+        aggregationJob.setNumReduceTasks(numberOfReduceTasks);
         aggregationJob.setPartitionerClass(CategoryPartitioner.class);
 
         aggregationJob.setMapOutputKeyClass(Text.class);
