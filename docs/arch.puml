@@ -1,0 +1,27 @@
+@startuml
+!theme plain
+hide empty members
+skinparam componentStyle uml2
+
+package "Aggregation" {
+    [NLineInputFormat] as Input
+    collections "SalesMapper\n(Extract & Calc)" as Map1
+    component "Combiner\n(Local Sum)" as Comb
+    control "Shuffle (Group By Category)" as Shuf1
+    collections "SalesReducer\n(Final Sum)" as Red1
+}
+
+package "Global Sorting" {
+    collections "SortMapper\n(Swap Key/Val)" as Map2
+    control "Shuffle (Sort By Revenue)" as Shuf2
+    component "SortReducer\n(Format Output)" as Red2
+}
+
+Input -> Map1 : 1. Parse CSV
+Map1 -> Comb : 2. Memory Buffer
+Comb -> Shuf1 : 3. Spill to Disk
+Shuf1 -> Red1 : 4. Network Transfer
+Red1 -d-> Map2 : 5. Write Temp Result -> Read
+Map2 -l-> Shuf2 : 6. Set Revenue as Key
+Shuf2 -l-> Red2 : 7. Merge Sort
+@enduml

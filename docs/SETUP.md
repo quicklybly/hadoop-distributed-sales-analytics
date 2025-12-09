@@ -1,5 +1,18 @@
 # Setup
 
+## Setup lfs
+
+This project uses [git lfs](https://git-lfs.com).
+
+```shell
+# mac os 
+brew install git-lfs
+git lfs install
+
+# pull csv files from lfs
+git lfs pull
+```
+
 ## Setup Hadoop
 
 ```shell
